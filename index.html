@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faith CNAP Questionnaire — The I AM Project</title>
+    <meta name="description"
+        content="The Faith CNAP is a 35-question assessment designed to help you examine how consistently your faith is expressed across seven important areas of life." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --espresso: #16181C;
+            --espresso-mid: #1C1E24;
+            --espresso-warm: #262c34;
+            --oak: #4A515B;
+            --gold-sacred: #96805B;
+            --gold-warm: #B59A72;
+            --gold-pale: #DCCA9A;
+            --parchment: #FCFAF7;
+            --parchment-mid: #F4EFEA;
+            --parchment-warm: #EAE1D7;
+            --cream: #F8F6F2;
+            --text-primary: #1C1E24;
+            --text-secondary: #4A515B;
+            --white: #FFFFFF;
+            --font-serif: 'Cormorant Garamond', garamond, Georgia, serif;
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --max-width: 900px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-serif);
+            color: var(--text-primary);
+            background: var(--cream);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* PROGRESS BAR */
+        .progress-bar-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            z-index: 400;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gold-sacred), var(--gold-warm), var(--gold-pale));
+            transition: width .3s ease;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 300;
+            background: rgba(253, 251, 247, 0.93);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(150, 128, 91, .15);
+            transition: background .4s, box-shadow .4s;
+        }
+
+        .nav-inner {
+            padding: 0 56px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .nav-logo-main {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: .06em;
+            color: var(--espresso);
+        }
+
+        .nav-logo-sub {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--gold-sacred);
+            margin-top: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: garamond, source-serif-pro, Georgia, Cambria, "Times New Roman", Times, serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--espresso);
+            transition: color .2s;
+            padding-bottom: 2px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold-sacred);
+            border-bottom: 1px solid var(--gold-sacred);
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-register {
+            /* font-family: var(--font-sans); */
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: 10px 22px;
+            background: linear-gradient(145deg, rgb(59 52 44 / 85%) 0%, rgb(27 26 19 / 95%) 100%);
+            color: #FFFFFF;
+            transition: background .2s;
+            border-radius: 3px;
+        }
+
+        .nav-register:hover {
+            background: var(--espresso-mid);
+        }
+
+        /* WIZARD */
+        .wizard-step {
+            display: none;
+        }
+
+        .wizard-step.active {
+            display: block;
+        }
+
+        .step-section {
+            padding: 56px 24px;
+        }
+
+        .step-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        /* BUTTONS */
+        .btn-submit {
+            display: inline-block;
+            font-family: var(--font-serif);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            padding: 16px 44px;
+            background: linear-gradient(145deg, rgb(59 52 44 / 85%) 0%, rgb(27 26 19 / 95%) 100%);
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all .3s cubic-bezier(.165, .84, .44, 1);
+        }
+
+        .btn-submit:hover {
+            background: var(--espresso-warm);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(22, 24, 28, .35);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            font-family: var(--font-serif);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--espresso);
+            border: 1.5px solid rgba(22, 24, 28, .3);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all .25s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--espresso);
+            background: rgba(22, 24, 28, .05);
+        }
+
+        .wizard-nav {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 40px;
+        }
+
+        /* HERO */
+        #q-hero {
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            display: block;
+            background: #f0ece5;
+        }
+
+        .q-hero-top {
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-height: min(720px, calc(100vh - 80px));
+            background: #f0ece5 url('personal_hero_bg.jpg') right center / cover no-repeat;
+        }
+
+        .q-hero-text-panel {
+            position: relative;
+            z-index: 2;
+            width: 60%;
+            flex-shrink: 0;
+            padding: 56px 24px 56px clamp(32px, 5.5vw, 88px);
+            text-align: left;
+        }
+
+        .q-hero-top .q-hero-inner {
+            max-width: 780px;
+            margin: 0;
+        }
+
+        .q-hero-top .q-eyebrow,
+        .q-hero-top .q-hero-inner h1,
+        .q-hero-top .q-hero-intro,
+        .q-hero-top .q-hero-scripture {
+            text-align: left;
+        }
+
+        .q-eyebrow {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: .36em;
+            text-transform: uppercase;
+            color: var(--gold-sacred);
+            /* margin-bottom: 14px; */
+            display: block;
+        }
+
+        .q-hero-top .q-hero-inner h1 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: clamp(36px, 4.6vw, 62px);
+            font-weight: 500;
+            line-height: 1.08;
+            color: var(--espresso);
+        }
+
+        .q-hero-scripture {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 15px;
+            /* font-style: italic; */
+            font-weight: 300;
+            line-height: 1.65;
+            color: black;
+            border-left: 2px solid var(--gold-sacred);
+            padding: 5px 16px;
+            margin: 8px 0 22px;
+            background: rgba(150, 128, 91, .06);
+            border-radius: 0 3px 3px 0;
+            display: inline-block;
+        }
+
+        .q-hero-scripture cite {
+            display: block;
+            font-style: normal;
+            font-size: 13px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            margin-top: 6px;
+            opacity: .75;
+        }
+
+        .q-hero-divider {
+            width: 44px;
+            height: 2px;
+            background: var(--gold-sacred);
+            margin: 0 0 4px;
+        }
+
+        .q-hero-top .q-hero-intro {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 16.5px;
+            line-height: 1.75;
+            margin-bottom: 14px;
+            color: var(--espresso);
+            opacity: .85;
+        }
+
+        .q-hero-top .q-hero-intro strong {
+            color: var(--espresso);
+            font-weight: 600;
+            opacity: 1;
+        }
+
+        .q-hero-card-panel {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+            padding: 24px 24px 24px 0;
+            margin-left: -2%;
+        }
+
+        .hero-card {
+            width: 100%;
+            max-width: 320px;
+            background: rgba(252, 250, 247, .97);
+            border: 1px solid rgba(150, 128, 91, .35);
+            box-shadow: 0 24px 60px rgba(22, 24, 28, .2), 0 2px 8px rgba(22, 24, 28, .06);
+            padding: 28px 28px 20px;
+            text-align: left;
+        }
+
+        .hero-card-title {
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'Times New Roman', Times, serif;
+            letter-spacing: .28em;
+            line-height: 1.86;
+            text-transform: uppercase;
+            color: black;
+        }
+
+        .hero-card-rule {
+            width: 30px;
+            height: 1px;
+            background: var(--gold-sacred);
+            margin: 12px 0 14px;
+        }
+
+        .hero-card-list {
+            list-style: none;
+        }
+
+        .hero-card-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 9px 0;
+            font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+            font-size: 15px;
+            line-height: 1.45;
+            color: black;
+            opacity: .8;
+        }
+
+        .hero-card-list li::before {
+            content: '\2713';
+            flex: 0 0 20px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gold-sacred);
+            color: #fff;
+            font-size: 11px;
+            line-height: 20px;
+            text-align: center;
+            opacity: .85;
+        }
+
+        .q-hero-bottom {
+            padding: 56px 40px 72px;
+            text-align: center;
+            background: var(--parchment-mid);
+            border-top: 1px solid rgba(150, 128, 91, .12);
+        }
+
+        .q-hero-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .scale-box {
+            background: rgba(150, 128, 91, .07);
+            border: 1.5px solid rgba(150, 128, 91, .28);
+            border-radius: 8px;
+            padding: 32px 36px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .scale-box-title {
+            text-align: center;
+            font-family: var(--font-serif);
+            font-size: 36px;
+            font-weight: 400;
+            color: var(--espresso);
+            margin-bottom: 6px;
+            letter-spacing: .04em;
+        }
+
+        .scale-box-sub {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: black;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .scale-item {
+            display: flex;
+            gap: 14px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin-bottom: 12px;
+            font-size: 15.5px;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .scale-item strong {
+            color: var(--gold-sacred);
+            min-width: 28px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .scale-note {
+            font-family: Georgia, serif;
+            font-size: 16px;
+            font-style: italic;
+            line-height: 1.75;
+            color: black;
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(150, 128, 91, .2);
+        }
+
+        .time-note {
+            padding-top: 0px;
+            font-size: 18px;
+            color: black;
+            font-weight: 500;
+            margin-top: 14px;
+            font-style: italic;
+        }
+
+        /* DETAILS */
+        .q-info-section,
+        .additional-block {
+            background: var(--white);
+            border: 1px solid rgba(150, 128, 91, .2);
+            border-radius: 8px;
+            padding: 48px;
+            margin-bottom: 40px;
+        }
+
+        .q-info-section h2,
+        .additional-block h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 400;
+            color: black;
+            margin-bottom: 10px;
+        }
+
+        .q-info-section .sub,
+        .additional-block p {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 16px;
+            color: black;
+            margin-bottom: 32px;
+            line-height: 1.75;
+        }
+
+        .sub {
+            font-size: 17px !important;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .form-field label {
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: black;
+            margin-bottom: 8px;
+        }
+
+        .form-field {
+            margin-bottom: 24px;
+        }
+
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            padding: 14px 18px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 16px;
+            border: 1.5px solid rgba(150, 128, 91, .25);
+            border-radius: 5px;
+            background: var(--parchment);
+            color: var(--text-primary);
+            transition: border-color .2s;
+            resize: vertical;
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--gold-sacred);
+        }
+
+        /* DOMAIN QUESTIONS */
+        .domain-header {
+            background: rgba(150, 128, 91, .08);
+            padding: 36px 44px;
+            border-radius: 8px 8px 0 0;
+            border: 1.5px solid rgba(150, 128, 91, .3);
+        }
+
+        .domain-num {
+            text-align: center;
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #96805bb3;
+        }
+
+        .domain-header h2 {
+            text-align: center;
+            font-family: var(--font-serif);
+            font-size: clamp(26px, 3.5vw, 36px);
+            font-weight: 600;
+            color: var(--espresso);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .domain-sub {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: black;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .domain-desc {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.75;
+            color: black;
+            text-align: center;
+        }
+
+        .q-card {
+            background: var(--white);
+            border: 1px solid rgba(150, 128, 91, .15);
+            border-top: none;
+            padding: 40px 44px;
+            transition: all .3s;
+        }
+
+        .q-card:last-of-type {
+            border-radius: 0 0 8px 8px;
+        }
+
+        .q-card:nth-of-type(even) {
+            background: var(--parchment);
+        }
+
+        .q-card.error {
+            border-color: #c0392b;
+            background: #fff9f8;
+        }
+
+        .q-num {
+            font-family: var(--font-sans);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--gold-sacred);
+            margin-bottom: 8px;
+        }
+
+        .q-title {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 26px;
+            font-weight: 500;
+            color: var(--espresso);
+            margin-bottom: 6px;
+            line-height: 1.25;
+        }
+
+        .q-question {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 16px;
+            font-style: italic;
+            line-height: 1.65;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-opt {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 5px;
+            border: 1.5px solid rgba(150, 128, 91, .18);
+            cursor: pointer;
+            transition: all .2s;
+            background: transparent;
+        }
+
+        .radio-opt:hover {
+            border-color: rgba(150, 128, 91, .4);
+            background: rgba(150, 128, 91, .04);
+        }
+
+        .radio-opt input {
+            margin-top: 3px;
+            accent-color: var(--gold-sacred);
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .radio-opt-label {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 15.5px;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .radio-opt-label strong {
+            color: var(--gold-sacred);
+            font-weight: 600;
+        }
+
+        .radio-opt.selected {
+            border-color: var(--gold-sacred);
+            background: rgba(150, 128, 91, .07);
+        }
+
+        /* CLOSING */
+        .q-footer-block {
+            background: var(--espresso);
+            border-radius: 8px;
+            padding: 56px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .q-footer-block::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('personal_hero_bg.jpg') right center / cover no-repeat;
+            opacity: .06;
+        }
+
+        .q-footer-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .q-footer-block h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(30px, 4vw, 44px);
+            font-weight: 300;
+            color: var(--parchment);
+            margin-bottom: 4px;
+        }
+
+        .q-footer-divider {
+            width: 36px;
+            height: 1px;
+            background: var(--gold-sacred);
+            margin: 18px 0;
+        }
+
+        .q-footer-block p,
+        .q-footer-list li {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 16.5px;
+            font-weight: 300;
+            line-height: 1.8;
+            color: rgba(220, 210, 186, .8);
+        }
+
+        .q-footer-block p {
+            margin-bottom: 16px;
+        }
+
+        .q-footer-list {
+            margin: 0 0 16px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .q-footer-list li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        .q-footer-list li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--gold-sacred);
+        }
+
+        .confidentiality {
+            font-size: 15px;
+            color: rgba(220, 202, 154, .7);
+            font-style: italic;
+            border-top: 1px solid rgba(150, 128, 91, .2);
+            padding-top: 24px;
+            margin-top: 24px;
+        }
+
+        /* VALIDATION */
+        .validation-msg-container {
+            display: none;
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+            border-radius: 7px;
+            padding: 24px;
+            margin-top: 32px;
+            animation: fadeIn .3s ease forwards;
+        }
+
+        .validation-msg-container.active {
+            display: block;
+        }
+
+        .validation-msg-title {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            font-weight: 700;
+            color: #c53030;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .validation-msg-title svg {
+            width: 16px;
+            height: 16px;
+            fill: #c53030;
+        }
+
+        .validation-msg-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .validation-msg-item {
+            font-family: Georgia, serif;
+            font-size: 15px;
+            color: #742a2a;
+            padding: 4px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .validation-msg-item::before {
+            content: "•";
+            color: #f56565;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* FOOTER */
+        footer {
+            background: linear-gradient(145deg, rgb(59 52 44 / 85%) 0%, rgb(27 26 19 / 95%) 100%);
+            color: #fff;
+            padding: 68px 30px 40px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            padding-bottom: 52px;
+            border-bottom: 1px solid rgba(220, 202, 154, .1);
+            margin-bottom: 48px;
+        }
+
+        .footer-brand-name {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .footer-brand-sub {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--gold-pale);
+            letter-spacing: .24em;
+        }
+
+        .footer-tagline {
+            font-family: Georgia, serif;
+            font-size: 15px;
+            opacity: .5;
+            margin-top: 18px;
+            max-width: 300px;
+            line-height: 1.7;
+        }
+
+        .footer-col-title {
+            font-family: var(--font-sans);
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--gold-pale);
+            margin-bottom: 22px;
+            letter-spacing: .22em;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 14px;
+        }
+
+        .footer-links a {
+            font-family: Georgia, serif;
+            font-size: 14px;
+            opacity: .6;
+            transition: opacity .2s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-social {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: Georgia, serif;
+            font-size: 14px;
+            opacity: .65;
+            transition: .2s;
+        }
+
+        .footer-social a:hover {
+            opacity: 1;
+        }
+
+        .footer-social svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-sans);
+            font-size: 12px;
+            opacity: .38;
+        }
+
+        .footer-legal a {
+            margin-left: 20px;
+        }
+
+        /* ─── HAMBURGER / MOBILE NAV ────────────────────────────── */
+        .nav-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 6px;
+            background: none;
+            border: none;
+            z-index: 350;
+        }
+
+        .nav-hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .nav-hamburger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-hamburger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .nav-hamburger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(253, 251, 247, 0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(150, 128, 91, 0.15);
+            z-index: 299;
+            padding: 24px 28px 32px;
+            flex-direction: column;
+            gap: 4px;
+            box-shadow: 0 8px 32px rgba(22, 24, 28, 0.1);
+            transform: translateY(-8px);
+            opacity: 0;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .mobile-nav.open {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-nav a {
+            font-family: var(--font-serif);
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text-primary);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(150, 128, 91, 0.1);
+            transition: color 0.2s ease;
+        }
+
+        .mobile-nav a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            color: var(--gold-sacred);
+        }
+
+        .mobile-nav .mobile-cta {
+            margin-top: 16px;
+            display: block;
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 14px 22px;
+            background: linear-gradient(145deg, rgb(59 52 44 / 85%) 0%, rgb(27 26 19 / 95%) 100%);
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:1220px) {
+
+            .nav-links,
+            .nav-register {
+                display: none;
+            }
+
+            .nav-hamburger {
+                display: flex;
+            }
+
+            .nav-inner {
+                padding: 0 24px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .q-footer-block,
+            .domain-header,
+            .q-card,
+            .q-info-section,
+            .additional-block {
+                padding: 32px 24px;
+            }
+
+            .q-hero-top {
+                flex-direction: column;
+                background-image: none;
+                background: var(--parchment-mid);
+            }
+
+            .q-hero-text-panel {
+                width: 100%;
+                padding: 48px 24px 24px;
+            }
+
+            .q-hero-card-panel {
+                width: 100%;
+                margin-left: 0;
+                justify-content: center;
+                padding: 80px 24px 48px;
+                background: url('personal_hero_bg.jpg') right center / cover no-repeat;
+            }
+
+            .q-hero-bottom {
+                padding: 40px 24px 56px;
+            }
+
+            .btn-submit,
+            .btn-outline {
+                width: 100%;
+            }
+        }
+
+        /* TABLET & INTERMEDIATE VIEWPORTS (641px - 1024px) */
+        @media(max-width: 1024px) {
+            footer {
+                padding: 56px 28px 36px;
+            }
+
+            .footer-top {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 36px 24px;
+                padding-bottom: 40px;
+                margin-bottom: 36px;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+
+            .footer-tagline {
+                max-width: 580px;
+                margin-top: 12px;
+            }
+        }
+
+        /* MOBILE VIEWPORTS (<= 640px) */
+        @media(max-width: 640px) {
+            footer {
+                padding: 42px 20px 28px;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 28px 18px;
+                padding-bottom: 28px;
+                margin-bottom: 24px;
+            }
+
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+
+            .footer-brand-name {
+                font-size: 22px;
+            }
+
+            .footer-tagline {
+                font-size: 14px;
+                line-height: 1.55;
+                margin-top: 10px;
+                max-width: 100%;
+            }
+
+            .footer-col-title {
+                margin-bottom: 14px;
+                font-size: 9.5px;
+            }
+
+            .footer-links li {
+                margin-bottom: 10px;
+            }
+
+            .footer-links a {
+                font-size: 13.5px;
+            }
+
+            .footer-col-connect {
+                grid-column: 1 / -1;
+                padding-top: 8px;
+                border-top: 1px solid rgba(220, 202, 154, .12);
+            }
+
+            .footer-social {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 12px 24px;
+                margin-top: 6px;
+            }
+
+            .footer-social a {
+                font-size: 13.5px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                font-size: 11px;
+                line-height: 1.5;
+            }
+
+            .footer-legal a {
+                margin-left: 0;
+                margin-right: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <nav id="top-nav">
+        <div class="nav-inner">
+            <div class="nav-logo">
+                <span class="nav-logo-main">The I AM</span>
+                <span class="nav-logo-sub">Project</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="https://www.theiamproject.com/the-i-am-project">Home</a></li>
+                <li><a href="https://www.theiamproject.com/about-david-page">About David</a></li>
+                <li><a href="index.html">Faith CNAP</a></li>
+                <li><a href="faithQu.html" class="active">Assessment</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="https://calendly.com/dgilks/consultation-with-david-gilks-1" class="nav-register"
+                    target="_blank">Book Consultation</a>
+            </div>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <!-- MOBILE NAV -->
+    <div class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+        <a href="https://www.theiamproject.com/the-i-am-project">Home</a>
+        <a href="https://www.theiamproject.com/about-david-page">About David</a>
+        <a href="index.html">Faith CNAP</a>
+        <a href="faithQu.html" class="active">Assessment</a>
+        <a href="https://calendly.com/dgilks/consultation-with-david-gilks-1" class="mobile-cta" target="_blank">Book
+            Consultation</a>
+    </div>
+
+    <form id="intake-form" novalidate onsubmit="return false;">
+
+        <!-- STEP 0: HERO -->
+        <div class="wizard-step active">
+            <section id="q-hero">
+                <div class="q-hero-top">
+                    <div class="q-hero-text-panel">
+                        <div class="q-hero-inner">
+                            <span class="q-eyebrow">THE I AM PROJECT</span>
+                            <h1>Faith–Based <br>Cultural–Neurological<br> Alignment Profile</h1>
+                            <blockquote class="q-hero-scripture">
+                                KEEP THE LAMPS LIT. LIVE WITH GREATER COHERENCE AND FAITHFULNESS.
+                                <!-- <cite>— Luke 12:35</cite> -->
+                            </blockquote>
+                            <div class="q-hero-divider"></div>
+                            <p class="q-hero-intro">This questionnaire is the starting point for your work within The I
+                                AM Project — Faith-Based Cultural Neurological Alignment Profile (CNAP). It is designed
+                                to help us understand how coherently your beliefs, habits, relationships, and daily
+                                practices are aligned with the life you profess to value.
+
+                            </p>
+                            <p class="q-hero-intro">The assessment explores seven interconnected domains of faithful
+                                living:<strong>Wellness, Spirituality, Family, Relationships, Career, Finances, and
+                                    Contribution</strong>. Together, they reveal where life feels grounded, intentional,
+                                and obedient — and where drift, inconsistency, or fragmentation may be present.</p>
+                            <p class="q-hero-intro">This is not simply about ideals. It is about the lived reality of
+                                your life <strong>over the past 30–90 days</strong>. For each question, choose the
+                                response that most accurately reflects what is actually occurring, and answer honestly
+                                rather than aspirationally.</p>
+                        </div>
+                    </div>
+                    <div class="q-hero-card-panel">
+                        <div class="hero-card">
+                            <p class="hero-card-title">Seven Areas of<br>Faithful Living</p>
+                            <div class="hero-card-rule"></div>
+                            <ul class="hero-card-list">
+                                <li>Wellness — Stewardship of the body</li>
+                                <li>Spirituality — Worship and devotion</li>
+                                <li>Family — Order and care</li>
+                                <li>Relationships — Love and reconciliation</li>
+                                <li>Career — Vocation and diligence</li>
+                                <li>Finances — Stewardship and generosity</li>
+                                <li>Contribution — Service and witness</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="q-hero-bottom">
+                    <div class="q-hero-inner">
+                        <div class="scale-box">
+                            <h3 class="scale-box-title">The Five Levels</h3>
+                            <span class="scale-box-sub">A-1 is information, not condemnation. A-5 is responsibility, not
+                                completion.</span>
+                            <div class="scale-item"><strong>1</strong><span>— <em>Disconnected</em> : Limited
+                                    intentional attention; largely reactive, neglected, or unstable.</span></div>
+                            <div class="scale-item"><strong>2</strong><span>— <em>Awakening</em> : Recognizing
+                                    importance and beginning to engage, but behaviour remains inconsistent.</span></div>
+                            <div class="scale-item"><strong>3</strong><span>— <em>Practicing</em> : Meaningful
+                                    behaviours and disciplines in place, becoming increasingly reliable.</span></div>
+                            <div class="scale-item"><strong>4</strong><span>— <em>Integrated</em> : A stable part of how
+                                    you live, generally present across changing circumstances.</span></div>
+                            <div class="scale-item"><strong>5</strong><span>— <em>Generative</em> : Deeply integrated
+                                    and increasingly creating benefit beyond you through presence, service, and
+                                    influence.</span></div>
+                            <p class="scale-note">Every area of life requires continued tending.</p>
+                            <p class="time-note">Please allow approximately 10–15 minutes to complete the assessment.
+                            </p>
+                        </div>
+                        <div style="margin-top:48px;">
+                            <button type="button" class="btn-submit" onclick="nextStep()"
+                                style="padding:20px 64px;font-size:15px;">Begin Assessment</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- STEP 1: DETAILS -->
+        <div class="wizard-step">
+            <section class="step-section">
+                <div class="step-inner">
+                    <div class="q-info-section">
+                        <h2>Your Details</h2>
+                        <p class="sub">Please provide your name and email address so we can connect your results to your
+                            profile.</p>
+                        <div class="info-grid">
+                            <div class="form-field">
+                                <label for="full-name">Full Name</label>
+                                <input type="text" id="full-name" name="full_name" placeholder="Your full name"
+                                    required />
+                            </div>
+                            <div class="form-field">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="you@example.com" required />
+                            </div>
+                            <div class="form-field" style="grid-column: 1 / -1;">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="e.g. +1 555 000 0000" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="validation-msg-container" id="step-1-errors">
+                        <div class="validation-msg-title">
+                            <svg viewBox="0 0 20 20">
+                                <path
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" />
+                            </svg>
+                            Please complete the following to proceed
+                        </div>
+                        <ul class="validation-msg-list"></ul>
+                    </div>
+                    <div class="wizard-nav">
+                        <button type="button" class="btn-outline" onclick="prevStep()">Back</button>
+                        <button type="button" class="btn-submit" onclick="nextStep()">Next: Wellness</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- STEPS 2-8: DOMAINS (JS) -->
+        <div id="domains-placeholder"></div>
+
+        <!-- STEP 9: ADDITIONAL AREA -->
+        <div class="wizard-step">
+            <section class="step-section">
+                <div class="step-inner">
+                    <div class="additional-block">
+                        <h2>Additional Area of Life</h2>
+                        <p>Is there another important area of your life not represented in the seven domains above? This
+                            additional area provides helpful context but is not included in your overall assessment
+                            score.</p>
+                        <div class="form-field">
+                            <label for="extra-name">Name of Additional Area</label>
+                            <input type="text" id="extra-name" name="extra_area_name"
+                                placeholder="e.g. Ministry, Community, Creative Work…" />
+                        </div>
+                        <div class="form-field">
+                            <label for="extra-desc">What does this area mean to you, and why is it important right
+                                now?</label>
+                            <textarea id="extra-desc" name="extra_area_desc" rows="5"
+                                placeholder="Describe what this area represents and its current significance in your life…"></textarea>
+                        </div>
+                    </div>
+                    <div class="validation-msg-container" id="step-9-errors">
+                        <div class="validation-msg-title">
+                            <svg viewBox="0 0 20 20">
+                                <path
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" />
+                            </svg>
+                            Please complete the following to proceed
+                        </div>
+                        <ul class="validation-msg-list"></ul>
+                    </div>
+                    <div class="wizard-nav">
+                        <button type="button" class="btn-outline" onclick="prevStep()">Back</button>
+                        <button type="button" class="btn-submit" onclick="nextStep()">Review &amp; Submit</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- STEP 10: CLOSING -->
+        <div class="wizard-step">
+            <section class="step-section">
+                <div class="step-inner">
+                    <div class="q-footer-block">
+                        <div class="q-footer-inner">
+                            <h2>Thank You</h2>
+                            <div class="q-footer-divider"></div>
+                            <p>You have completed the Faith CNAP. Your responses provide a starting picture of where the
+                                lamp is <strong style="color:var(--gold-pale);">well tended</strong>, where it is
+                                strengthening, and where greater attention is being asked of you.</p>
+                            <p>This is not a judgment of who you are before God. It is a practical baseline that will
+                                help guide the work ahead. Your results will be used to identify:</p>
+                            <ul class="q-footer-list">
+                                <li>the areas where your faith is most consistently expressed in daily life,</li>
+                                <li>the areas creating the greatest gap between belief and behaviour,</li>
+                                <li>and the most useful place to begin.</li>
+                            </ul>
+                            <p>Please review your responses before submitting. Once complete, select <strong
+                                    style="color:var(--gold-pale);">Submit</strong> below.</p>
+                            <div class="confidentiality">
+                                <strong>Confidentiality Notice</strong> — Your responses are confidential and are used
+                                solely for coaching and personal-development purposes.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="validation-msg-container" id="step-10-errors">
+                        <div class="validation-msg-title">
+                            <svg viewBox="0 0 20 20">
+                                <path
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" />
+                            </svg>
+                            Please complete the following to proceed
+                        </div>
+                        <ul class="validation-msg-list"></ul>
+                    </div>
+                    <div class="wizard-nav">
+                        <button type="button" class="btn-outline" onclick="prevStep()">Back</button>
+                        <button type="button" class="btn-submit" onclick="submitForm()">Submit Assessment</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </form>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <p class="footer-brand-name">The I AM</p>
+                    <p class="footer-brand-sub">Project</p>
+                    <p class="footer-tagline">Helping people move from insight into action — in faith, leadership, and
+                        life.</p>
+                </div>
+                <div class="footer-col footer-col-nav">
+                    <p class="footer-col-title">Navigate</p>
+                    <ul class="footer-links">
+                        <li><a href="https://www.theiamproject.com/the-i-am-project">Home</a></li>
+                        <li><a href="https://www.theiamproject.com/about-david-page">About David</a></li>
+                        <li><a href="https://www.theiamproject.com/executive-page">Executive CNAP</a></li>
+                        <li><a href="index.html">Faith CNAP</a></li>
+                        <li><a href="https://www.theiamproject.com/david-book">New Release</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col footer-col-start">
+                    <p class="footer-col-title">Get Started</p>
+                    <ul class="footer-links">
+                        <li><a href="faithQu.html">Begin the Faith CNAP</a></li>
+                        <li><a href="https://calendly.com/dgilks/consultation-with-david-gilks-1" target="_blank">Book
+                                Consultation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col footer-col-connect">
+                    <p class="footer-col-title">Connect</p>
+                    <div class="footer-social">
+                        <a href="https://twitter.com/davidgilks1" target="_blank">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.736-8.858L1.254 2.25H8.08l4.256 5.626 5.908-5.626zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                            X (Twitter)
+                        </a>
+                        <a href="https://www.instagram.com/davidgilks/" target="_blank">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+                            </svg>
+                            Instagram
+                        </a>
+                        <a href="https://www.linkedin.com/in/dgilks/" target="_blank">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The I AM Project. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="https://www.theiamproject.com/privacy" target="_blank">Privacy</a>
+                    <a href="https://www.theiamproject.com/terms-of-use" target="_blank">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const LABELS = ['Disconnected', 'Awakening', 'Practicing', 'Integrated', 'Generative'];
+
+        const DOMAINS = [
+            {
+                num: '01', title: 'Wellness', sub: 'Stewardship of the Body',
+                desc: 'Wellness considers how intentionally you care for your physical well-being, energy, recovery, stress, and the habits you use to regulate yourself.',
+                questions: [
+                    { title: 'Sleep and Recovery', question: 'How intentionally do you protect the sleep and recovery your body needs?', opts: ['I give little intentional attention to sleep and recovery, and fatigue regularly affects how I function.', 'I recognize the importance of sleep and recovery and make periodic efforts to improve them, but stress, habits, work, or competing priorities frequently disrupt me.', 'I maintain meaningful sleep and recovery practices with reasonable consistency, although demanding periods can still knock me off course.', 'Sleep and recovery are established priorities and remain relatively stable even when life becomes demanding.', 'My approach to sleep and recovery is deeply integrated and consistently supports my ability to be present, responsible, and useful to others.'] },
+                    { title: 'Nutrition', question: 'How intentionally do you nourish your body in a way that supports health, energy, and responsible stewardship?', opts: ['My eating is largely reactive, impulsive, or driven by convenience or emotion, with limited attention to how it affects my wellbeing.', 'I understand that nutrition matters and make healthier choices at times, but stress, convenience, or circumstance frequently disrupts them.', 'I have a reasonably intentional approach to nutrition and usually make choices that support my health, although consistency still fluctuates.', 'My nutrition is stable, intentional, and appropriately balanced, and I adapt without abandoning the principles that support my wellbeing.', 'My nutrition is deeply integrated and supports the energy, health, and capacity required to remain present and useful to others.'] },
+                    { title: 'Movement and Physical Capacity', question: 'How consistently do you care for your body through appropriate movement, exercise, strength, mobility, or physical activity?', opts: ['Physical activity receives little intentional attention, and I am mostly inactive or dependent upon occasional motivation.', 'I recognize the importance of physical activity and periodically begin routines, but consistency is easily lost.', 'Movement or exercise is a meaningful part of my life, although demanding periods can still disrupt my consistency.', 'Physical activity is a stable part of how I care for myself, and I adapt appropriately to changing circumstances or limitations.', 'My physical capacity is deeply integrated into my life and increases my ability to carry responsibilities, participate fully, serve, and contribute.'] },
+                    { title: 'Stress and Emotional Regulation', question: 'When stress increases, how effectively do you regulate yourself rather than allowing stress to govern your behaviour?', opts: ['Stress frequently drives my behaviour through anger, withdrawal, overwhelm, avoidance, shutdown, or other reactive responses.', 'I recognize many of my stress patterns and know some strategies that help, but I struggle to use them consistently when I need them most.', 'I regularly use healthy regulation strategies and recover more deliberately, although significant pressure can still overwhelm them.', 'I recognize activation relatively early and generally regulate myself well enough to remain thoughtful, responsible, and aligned with my values.', 'Emotional regulation is deeply integrated, and my steadiness under pressure increases stability and trust for the people around me.'] },
+                    { title: 'Coping and Self-Mastery', question: 'When you are tired, stressed, lonely, disappointed, or overwhelmed, how intentionally do you respond rather than numb or escape?', opts: ['I regularly rely on food, alcohol, substances, screens, spending, work, avoidance, or other behaviours to escape discomfort even when they undermine my wellbeing.', 'I recognize some unhealthy coping patterns and periodically interrupt them, but stress often pulls me back toward familiar forms of numbing or escape.', 'I increasingly choose healthier ways of coping and demonstrate greater restraint, although I still return to old patterns during difficult periods.', 'I generally respond to difficult emotional states consciously and use healthy regulation, rest, support, reflection, or appropriate action rather than habitual numbing.', 'I have developed substantial freedom from compulsive coping patterns, and that stability supports healthier relationships, responsibilities, and contribution.'] }
+                ]
+            },
+            {
+                num: '02', title: 'Spirituality', sub: 'Orientation, Worship, and Allegiance',
+                desc: 'Spirituality considers how consistently your relationship with God, your convictions, and your spiritual practices shape the way you actually live.',
+                questions: [
+                    { title: 'Anchoring Practice', question: 'How consistently do you engage in spiritual practices that keep your attention and life oriented toward God?', opts: ['Prayer, Scripture, worship, reflection, or other spiritual practices have little consistent place in my life.', 'I recognize their importance and engage at times, but stress, busyness, distraction, or changing circumstances easily displace them.', 'I have meaningful spiritual practices in place and engage with them reasonably consistently, although demanding periods can still disrupt them.', 'Spiritual practice is a stable part of my life and regularly shapes my attention, decisions, and responses.', 'My spiritual practices are deeply integrated and increasingly strengthen my capacity to live faithfully, encourage others, and serve beyond myself.'] },
+                    { title: 'Clarity of Values and Convictions', question: 'How clear are you about the convictions and values that guide the way you intend to live?', opts: ['I am often unclear about what I believe and can be easily governed by mood, pressure, approval, or circumstance.', 'My beliefs and values are becoming clearer, but they do not yet consistently govern my decisions.', 'My convictions influence many of my choices, although I still compromise or become uncertain in some situations.', 'My values and convictions are clear and generally remain stable even when living by them is difficult.', 'My convictions are deeply integrated and expressed with humility and consistency in ways that strengthen rather than dominate others.'] },
+                    { title: 'Integrity Under Pressure', question: 'When living according to your faith becomes difficult, how consistently does your behaviour remain aligned with what you believe?', opts: ['Under pressure, I frequently behave in ways that contradict my stated beliefs or values.', 'I recognize the gap between what I believe and how I sometimes behave, but pressure still regularly overrides my convictions.', 'I increasingly remain aligned under pressure, although fear, anger, approval, or self-interest can still pull me off course.', 'I generally maintain my standards under pressure and course-correct quickly when I fall short.', 'Pressure tends to reveal rather than dismantle my convictions, and my consistency helps create trust and stability around me.'] },
+                    { title: 'Humility and Self-Correction', question: 'How willing are you to examine yourself honestly, acknowledge when you are wrong, and change your behaviour?', opts: ['I tend to defend, justify, blame, or avoid responsibility when my behaviour is challenged.', 'I can recognize mistakes and sometimes accept responsibility, but defensiveness frequently delays correction or repair.', 'I am becoming more willing to examine myself honestly and make adjustments, although inconsistency remains.', 'I generally accept responsibility, make repair, and change behaviour without prolonged defensiveness.', 'Humility and self-correction are established strengths, and my teachability makes it easier for others to be honest, accountable, and open to growth.'] },
+                    { title: 'Meaning and Purpose', question: 'How consistently is your life organized around a sense of purpose beyond comfort, approval, achievement, or personal gain?', opts: ['I often feel directionless and live mainly in response to immediate circumstances or desires.', 'I want a clearer sense of purpose and occasionally act from it, but it does not consistently shape my priorities.', 'I have a meaningful sense of purpose and increasingly organize decisions around it.', 'My sense of purpose consistently influences my habits, relationships, priorities, and decisions.', 'Purpose is deeply integrated into how I live and increasingly directs my abilities, influence, time, and resources toward service beyond myself.'] }
+                ]
+            },
+            {
+                num: '03', title: 'Family', sub: 'Formation, Responsibility, and Generational Influence',
+                desc: 'Family considers the relationships, responsibilities, patterns, and influence present within your family of origin, the family you have built, your extended family, or those you consider family.',
+                questions: [
+                    { title: 'Presence and Reliability', question: 'How consistently are you present, available, and dependable within the family relationships that are yours to steward?', opts: ['I am often absent, emotionally unavailable, avoidant, or unreliable within important family relationships.', 'I recognize the importance of being present, but stress, distraction, resentment, or competing priorities frequently interfere.', 'I show up meaningfully and reliably in many situations, although consistency still varies.', 'I am generally a stable, available, and dependable presence within my family.', 'My presence and reliability consistently strengthen trust, stability, and wellbeing within my family and help others become more secure and capable.'] },
+                    { title: 'Repair After Conflict', question: 'When conflict or hurt occurs within your family, how consistently do you move toward appropriate repair?', opts: ['I tend to blame, withdraw, attack, avoid, or allow conflict to remain unresolved.', 'I recognize the need for repair, but pride, fear, resentment, or avoidance often delays it.', 'I increasingly take responsibility and attempt repair, although I remain inconsistent in more difficult situations.', 'I usually address conflict directly, accept responsibility, and make appropriate repair.', 'Repair is an established part of my character, and my approach helps create a family culture where conflict can lead to honesty, understanding, and growth.'] },
+                    { title: 'Communication', question: 'How consistently do you communicate with family members clearly, honestly, respectfully, and constructively?', opts: ['Family communication is often volatile, avoidant, indirect, unclear, or emotionally unsafe.', 'I recognize communication problems and try to improve them, but stress frequently returns me to old habits.', 'My communication is becoming healthier and more direct, although both constructive and unhealthy patterns remain.', 'I generally communicate clearly, honestly, respectfully, and steadily, including during difficult conversations.', 'My communication consistently supports honesty, safety, understanding, responsibility, and healthier communication patterns within the family.'] },
+                    { title: 'Responsibility Within the Family', question: 'How consistently do you fulfill your appropriate responsibilities in ways that contribute to stability and wellbeing within your family?', opts: ['I often avoid responsibility, leave important obligations unmet, or contribute to instability.', 'I recognize my responsibilities and fulfill some of them, but inconsistency still affects others.', 'I contribute meaningfully and increasingly follow through, although some areas still need greater consistency.', 'I consistently fulfill my responsibilities and contribute to stability and wellbeing.', 'I carry responsibility faithfully while helping strengthen the capacity, order, and resilience of the family as a whole.'] },
+                    { title: 'Values Lived Within Family', question: 'How closely does the way you treat your family reflect the character, values, and faith you say are important to you?', opts: ['My behaviour with family frequently contradicts the person I say I want to be.', 'I recognize significant gaps between my values and how I behave with family, especially under stress.', 'My values are increasingly visible in family life, although old patterns still appear.', 'My behaviour with family generally reflects my stated values, and I repair misalignment when it occurs.', 'My deepest values are consistently evident in family life and increasingly strengthen the values and patterns being passed to future generations.'] }
+                ]
+            },
+            {
+                num: '04', title: 'Relationships', sub: 'Love, Boundaries, Conflict, and Character',
+                desc: 'Relationships consider friendships, intimate relationships, professional relationships, and the broader relational environment you intentionally maintain.',
+                questions: [
+                    { title: 'Choosing Relationships', question: 'How intentionally do you build and maintain relationships that support mutual respect, honesty, responsibility, and growth?', opts: ['I remain in relationships that regularly undermine my wellbeing, values, direction, or character without taking meaningful action.', 'I recognize unhealthy relational patterns but struggle to make clear or consistent decisions about them.', 'I am becoming more selective and intentional about the relationships I maintain.', 'Most of my relationships support mutual respect, honesty, responsibility, and growth.', 'I intentionally cultivate relationships in which both people become stronger, more responsible, and more capable of contributing to others.'] },
+                    { title: 'Boundaries', question: 'How consistently do you establish and maintain clear, calm, respectful boundaries?', opts: ['My boundaries are absent, unclear, inconsistent, overly harsh, or expressed mainly through withdrawal.', 'I recognize the need for boundaries and set them at times, but guilt, fear, pressure, or conflict frequently erodes them.', 'I maintain healthy boundaries in many situations, although emotionally charged relationships remain challenging.', 'My boundaries are generally clear, respectful, proportionate, and consistent.', 'My boundaries protect healthy connection and responsibility while also modelling mature relational limits for others.'] },
+                    { title: 'Honesty and Respect During Conflict', question: 'When disagreement occurs, how consistently can you remain truthful, direct, respectful, and responsible?', opts: ['I frequently avoid conflict, attack, manipulate, become contemptuous, or communicate indirectly.', 'I recognize these patterns and try to communicate differently, but emotional reactivity often takes over.', 'I increasingly communicate honestly and respectfully during conflict, though old reactions still appear.', 'I generally remain direct, truthful, respectful, and responsible even during difficult disagreements.', 'I can communicate difficult truths with maturity and help create conditions where conflict becomes constructive and growth-producing.'] },
+                    { title: 'Emotional Safety', question: 'How consistently do the people closest to you experience you as emotionally steady, honest, available, and safe to engage with?', opts: ['My emotional reactions can be unpredictable, intense, withdrawn, or destabilizing for others.', 'I recognize how my emotional state affects others, but my steadiness varies significantly under stress.', 'My regulation and emotional availability are improving, although inconsistency remains.', 'I am generally emotionally steady, available, and predictable enough that others can engage with me openly.', 'My emotional steadiness consistently creates greater honesty, trust, and relational safety around me.'] },
+                    { title: 'Accountability and Repair', question: 'When your behaviour causes relational harm, how consistently do you own your impact and make appropriate repair?', opts: ['I tend to justify, blame, withdraw, minimize, or leave relational damage unresolved.', 'I sometimes accept responsibility, but repair is often delayed by defensiveness, pride, or avoidance.', 'I increasingly take accountability and make repair, although I remain inconsistent in difficult situations.', 'Accountability and repair are normal parts of my relationships.', 'I actively own my impact and model accountability in ways that make healthy repair more normal for the people around me.'] }
+                ]
+            },
+            {
+                num: '05', title: 'Career', sub: 'Work, Calling, Identity, and Service',
+                desc: 'Career includes employment, profession, business, vocation, education, or other purposeful work.',
+                questions: [
+                    { title: 'Consistent Execution', question: 'How consistently do you complete the important work and commitments that are yours to carry?', opts: ['I regularly procrastinate, avoid important work, or fail to complete what I begin.', 'I recognize the importance of follow-through and often begin with good intentions, but momentum is easily lost.', 'I complete meaningful work with reasonable consistency, although execution still becomes unreliable under pressure or distraction.', 'I generally complete important work and honour professional commitments regardless of temporary discomfort or low motivation.', 'Reliable execution is an established strength, and my consistency creates trust, stability, and opportunity for others.'] },
+                    { title: 'Time and Attention', question: 'How intentionally do you direct your time and attention toward the work and responsibilities that matter most?', opts: ['My time is frequently consumed by distraction, low-priority activity, or reactive demands.', 'I recognize the need for greater structure and try planning systems, but rarely maintain them consistently.', 'I have meaningful structure and protect important priorities much of the time, although distraction remains a challenge.', 'My time and attention generally reflect my stated priorities.', 'I manage attention deliberately enough that my time supports meaningful work, relationships, responsibilities, and opportunities that create value beyond myself.'] },
+                    { title: 'Growth and Mastery', question: 'How consistently do you develop the skills, knowledge, judgment, and maturity required to grow in your work?', opts: ['I tend to avoid challenge, remain comfortable, or allow my development to stall.', 'I want to grow and recognize areas needing development, but comfort or inconsistency frequently interferes.', 'I pursue meaningful growth and skill development, although my effort still occurs unevenly.', 'Learning, skill development, and professional maturity are established parts of how I work.', 'I continue developing my abilities while intentionally transferring knowledge, opportunity, and capability to others.'] },
+                    { title: 'Response to Pressure', question: 'When professional pressure increases, how consistently can you remain clear, thoughtful, effective, and aligned with your values?', opts: ['Pressure regularly makes me reactive, disorganized, avoidant, or unable to perform effectively.', 'I recognize how pressure affects me but struggle to regain focus and stability quickly.', 'I handle many forms of pressure reasonably well, although certain situations still destabilize me.', 'I generally remain calm, focused, thoughtful, and effective under pressure.', 'My steadiness under pressure not only protects my own performance but helps stabilize and strengthen the people and systems around me.'] },
+                    { title: 'Alignment With Values and Direction', question: 'How closely does your work reflect your values, strengths, responsibilities, and long-term direction?', opts: ['My work significantly contradicts my values, or I feel that I am drifting without meaningful direction.', 'I recognize areas of misalignment and have begun thinking seriously about change, but significant conflict remains.', 'I am actively moving toward greater alignment and making meaningful changes.', 'My work is generally aligned with my values, strengths, responsibilities, and intended direction.', 'My work expresses my values and abilities in ways that create meaningful contribution, develop others, and produce value beyond my own advancement.'] }
+                ]
+            },
+            {
+                num: '06', title: 'Finances', sub: 'Stewardship, Security, Contentment, and Generosity',
+                desc: 'Finances considers your awareness, planning, restraint, financial structure, and relationship with resources.',
+                questions: [
+                    { title: 'Financial Awareness', question: 'How clearly and consistently do you know where you stand financially?', opts: ['I avoid looking closely at my finances and do not clearly know my income, expenses, debt, obligations, or available resources.', 'I review my finances periodically and recognize the need for greater awareness, but do not maintain it consistently.', 'I have a reasonable understanding of my financial position and review it with increasing consistency.', 'I maintain clear and regular awareness of my financial position and adjust decisions accordingly.', 'Financial awareness is deeply integrated and helps me make decisions that support stability, generosity, responsibility, and long-term contribution.'] },
+                    { title: 'Financial Structure', question: 'How consistently do you use a practical system for managing income, expenses, obligations, saving, and giving?', opts: ['I have little reliable financial structure and my spending or obligations are largely reactive.', 'I have tried budgets or financial systems but struggle to maintain them.', 'I have meaningful financial structure in place, although follow-through remains inconsistent in some areas.', 'I follow a practical and reliable financial system most of the time.', 'My financial system is clear and sustainable and creates increasing capacity for provision, generosity, opportunity, and contribution.'] },
+                    { title: 'Planning and Foresight', question: 'How consistently do you plan ahead financially for expected responsibilities and unexpected events?', opts: ['I rarely plan ahead, and unexpected expenses frequently create significant instability.', 'I recognize the importance of planning and do so periodically, but not consistently enough to create stability.', 'I have some planning structures and reserves in place, although meaningful gaps remain.', 'I generally plan ahead and am reasonably prepared for expected expenses and common disruptions.', 'Financial planning is an established practice that creates stability and flexibility while increasing my ability to support others and future responsibilities.'] },
+                    { title: 'Restraint and Delayed Gratification', question: 'How consistently can you resist impulsive or emotionally driven spending in favour of longer-term priorities?', opts: ['Immediate desire, emotion, comparison, or impulse frequently drives my financial decisions.', 'I recognize these patterns and exercise restraint at times, but pressure or emotion often overrides my intentions.', 'My financial discipline is improving and I increasingly delay gratification, although inconsistency remains.', 'I generally make disciplined financial decisions and can delay immediate wants when they conflict with larger priorities.', 'I consistently exercise restraint so that resources remain available for meaningful priorities, generosity, responsibility, and future contribution.'] },
+                    { title: 'Financial Integrity and Stewardship', question: 'How closely do your financial choices reflect responsibility, honesty, restraint, generosity, and your stated values?', opts: ['My financial behaviour regularly contradicts my values or responsibilities.', 'I recognize areas of inconsistency and demonstrate responsibility in some areas, but significant gaps remain.', 'My financial habits increasingly reflect my values, although some behaviours still require greater alignment.', 'My financial behaviour is generally responsible, honest, disciplined, and aligned with my priorities.', 'My finances consistently reflect responsibility, restraint, generosity, order, and integrity, and I intentionally use financial capacity to create meaningful good beyond myself.'] }
+                ]
+            },
+            {
+                num: '07', title: 'Contribution', sub: 'Service, Influence, Generosity, and Legacy',
+                desc: 'Contribution considers how intentionally you use your experience, abilities, resources, influence, and opportunities in service of people and purposes beyond yourself.',
+                questions: [
+                    { title: 'Service Beyond Self', question: 'How consistently do you use some of your time, energy, resources, or abilities in service of something beyond your own immediate needs?', opts: ['Most of my attention and energy is focused on my own needs, pressures, and immediate concerns.', 'I recognize the importance of contribution and help others occasionally, but it remains inconsistent or reactive.', 'I contribute meaningfully in several ways, although service is not yet fully integrated or consistently structured.', 'Service and contribution are established parts of how I live.', 'Contribution is deeply integrated, and I intentionally use my capacity in ways that create lasting benefit beyond myself.'] },
+                    { title: 'Using Strengths to Build Others', question: 'How consistently do you use your strengths, knowledge, access, or resources to increase the capability of others?', opts: ['I primarily use my abilities and resources for my own advancement or immediate needs.', 'I want to help build others and recognize opportunities to do so, but follow-through remains limited.', 'I increasingly teach, encourage, mentor, support, or create opportunities for others.', 'I regularly use my strengths to increase the confidence, capability, or opportunities of others.', 'I intentionally multiply capacity in others so they become stronger, more capable, and less dependent upon my direct involvement.'] },
+                    { title: 'Follow-Through on Commitments', question: 'When you commit to helping a person, community, organization, or cause, how consistently do you follow through?', opts: ['I frequently fail to fulfil commitments I make to people or causes.', 'I intend to follow through, but pressure, inconvenience, or competing priorities often disrupt my commitments.', 'My reliability is improving, although inconsistency remains.', 'I am generally dependable and usually honour the commitments I make.', 'My word carries weight because I consistently follow through and choose commitments that can create sustainable benefit.'] },
+                    { title: 'Long-Term Impact and Legacy', question: 'How intentionally do your present choices reflect the impact or legacy you hope your life will eventually represent?', opts: ['I am primarily focused on getting through the present and rarely consider my longer-term impact.', 'I think about legacy or meaningful contribution but take little consistent action toward it.', 'I take meaningful actions toward longer-term contribution, although direction and consistency are still developing.', 'My regular choices increasingly reflect the impact I want my life to have.', 'I live my legacy now through deliberate choices, service, mentorship, responsibility, and contribution that can continue beyond my direct involvement.'] },
+                    { title: 'Responsibility for My Impact', question: 'How carefully do you consider and take responsibility for the effect your choices, behaviour, leadership, and influence have on others?', opts: ['I rarely consider how my behaviour or influence affects other people.', 'I generally intend well and am becoming more aware of my impact, but I do not yet take consistent responsibility for it.', 'My awareness is growing and I increasingly consider the consequences of my choices, although inconsistency remains.', 'I generally consider my impact and take responsibility for how my choices affect others.', 'I carefully steward my influence and intentionally consider both immediate and long-term consequences for the people, communities, and systems affected by my actions.'] }
+                ]
+            }
+        ];
+
+        let steps = [];
+        let currentStep = 0;
+
+        function buildWizard() {
+            const ph = document.getElementById('domains-placeholder');
+            let html = '';
+            DOMAINS.forEach((d, idx) => {
+                let qHTML = d.questions.map((q, qi) => {
+                    const field = `d${d.num}_q${qi + 1}`;
+                    const opts = q.opts.map((opt, oi) => `
+        <label class="radio-opt">
+          <input type="radio" name="${field}" value="${oi + 1}" required/>
+          <span class="radio-opt-label"><strong>${oi + 1} — ${LABELS[oi]}</strong><br>${opt}</span>
+        </label>`).join('');
+                    return `<div class="q-card"><div class="q-num">Question ${qi + 1} of 5</div><div class="q-title">${q.title}</div><p class="q-question">${q.question}</p><div class="radio-group">${opts}</div></div>`;
+                }).join('');
+
+                html += `
+    <div class="wizard-step">
+      <section class="step-section">
+        <div class="step-inner">
+          <div class="domain-header">
+            <div class="domain-num">Domain ${d.num}</div><h2>${d.title}</h2><div class="domain-sub">${d.sub}</div><p class="domain-desc">${d.desc}</p>
+          </div>
+          ${qHTML}
+          <div class="validation-msg-container">
+            <div class="validation-msg-title">
+                <svg viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/></svg>
+                Please answer the remaining questions to proceed
+            </div>
+            <ul class="validation-msg-list"></ul>
+          </div>
+          <div class="wizard-nav">
+            <button type="button" class="btn-outline" onclick="prevStep()">Back</button>
+            <button type="button" class="btn-submit" onclick="nextStep()">Next: ${idx < 6 ? DOMAINS[idx + 1].title : 'Additional Area'}</button>
+          </div>
+        </div>
+      </section>
+    </div>`;
+            });
+            ph.outerHTML = html;
+            steps = Array.from(document.querySelectorAll('.wizard-step'));
+        }
+
+        buildWizard();
+
+        document.addEventListener('change', e => {
+            if (e.target.type === 'radio') {
+                const group = e.target.closest('.radio-group');
+                group.querySelectorAll('.radio-opt').forEach(l => l.classList.remove('selected'));
+                e.target.closest('.radio-opt').classList.add('selected');
+                e.target.closest('.q-card').classList.remove('error');
+            }
+        });
+
+        function updateProgress() {
+            const pb = document.getElementById('progress-bar');
+            const percent = steps.length > 1 ? (currentStep / (steps.length - 1)) * 100 : 0;
+            pb.style.width = percent + '%';
+        }
+
+        function showStep(index) {
+            steps.forEach((el, i) => el.classList.toggle('active', i === index));
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateStep(index) {
+            const stepEl = steps[index];
+            let valid = true, msgs = [];
+
+            stepEl.querySelectorAll('input:not([type="radio"])[required]').forEach(el => {
+                if (!el.value.trim()) {
+                    valid = false;
+                    el.style.borderColor = '#c0392b';
+                    msgs.push(el.previousElementSibling ? el.previousElementSibling.textContent : 'Required field');
+                } else { el.style.borderColor = ''; }
+            });
+
+            const radios = Array.from(stepEl.querySelectorAll('input[type="radio"]'));
+            const groups = new Set(radios.map(r => r.name));
+            groups.forEach(name => {
+                const checked = stepEl.querySelector(`input[name="${name}"]:checked`);
+                if (!checked) {
+                    valid = false;
+                    const card = stepEl.querySelector(`input[name="${name}"]`).closest('.q-card');
+                    card.classList.add('error');
+                    msgs.push(card.querySelector('.q-title').textContent);
+                }
+            });
+
+            if (!valid) {
+                const container = stepEl.querySelector('.validation-msg-container');
+                if (container) {
+                    container.querySelector('.validation-msg-list').innerHTML = msgs.map(m => `<li class="validation-msg-item">${m}</li>`).join('');
+                    container.classList.add('active');
+                    container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            } else {
+                const container = stepEl.querySelector('.validation-msg-container');
+                if (container) container.classList.remove('active');
+            }
+            return valid;
+        }
+
+        function nextStep() {
+            if (!validateStep(currentStep)) return;
+            if (currentStep < steps.length - 1) { currentStep++; showStep(currentStep); }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) { currentStep--; showStep(currentStep); }
+        }
+
+        async function submitForm() {
+            if (!validateStep(currentStep)) return;
+
+            const submitBtn = steps[currentStep].querySelector('button[onclick="submitForm()"]');
+
+            // 1. Lock UI
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting Assessment...';
+                submitBtn.style.opacity = '0.6';
+                submitBtn.style.cursor = 'not-allowed';
+            }
+
+            // 2. Gather Data (including Phone)
+            const data = {
+                full_name: document.getElementById('full-name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value, // Added Phone
+                responses: {},
+                extra_name: document.getElementById('extra-name').value,
+                extra_desc: document.getElementById('extra-desc').value
+            };
+
+            DOMAINS.forEach(d => {
+                d.questions.forEach((_, qi) => {
+                    const name = `d${d.num}_q${qi + 1}`;
+                    const checked = document.querySelector(`input[name="${name}"]:checked`);
+                    if (checked) data.responses[name] = checked.value;
+                });
+            });
+
+            // IMPORTANT: Replace this URL with your NEW Faith CNAP Google Webhook URL
+            const ENDPOINT = 'YOUR_GOOGLE_SCRIPT_WEBHOOK_URL_HERE';
+            const THANK_YOU = 'https://www.theiamproject.com/thank-you'; // Or whatever David's thank you page is
+
+            // 20-second timeout to prevent spooling
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 20000);
+
+            try {
+                await fetch(ENDPOINT, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                window.location.href = THANK_YOU;
+
+            } catch (error) {
+                console.error("Submission failed or timed out:", error);
+
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Assessment';
+                    submitBtn.style.opacity = '1';
+                    submitBtn.style.cursor = 'pointer';
+                }
+
+                const errorContainer = document.getElementById('step-10-errors');
+                if (errorContainer) {
+                    const list = errorContainer.querySelector('.validation-msg-list');
+                    list.innerHTML = `<li class="validation-msg-item">Connection blocked. Your browser's privacy settings or ad-blocker prevented the submission. Please try submitting in an "Incognito/Private" window, or use a mobile device.</li>`;
+                    errorContainer.classList.add('active');
+                }
+            }
+        }
+
+        // Mobile hamburger menu
+        const hamburger = document.getElementById('nav-hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        const topNav = document.getElementById('top-nav');
+        let mobileOpen = false;
+
+        if (hamburger && mobileNav) {
+            hamburger.addEventListener('click', () => {
+                mobileOpen = !mobileOpen;
+                hamburger.classList.toggle('open', mobileOpen);
+                hamburger.setAttribute('aria-expanded', mobileOpen);
+                if (mobileOpen) {
+                    mobileNav.style.display = 'flex';
+                    requestAnimationFrame(() => mobileNav.classList.add('open'));
+                } else {
+                    mobileNav.classList.remove('open');
+                    setTimeout(() => { mobileNav.style.display = ''; }, 260);
+                }
+            });
+
+            // Close mobile nav on link click
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileOpen = false;
+                    hamburger.classList.remove('open');
+                    hamburger.setAttribute('aria-expanded', false);
+                    mobileNav.classList.remove('open');
+                    setTimeout(() => { mobileNav.style.display = ''; }, 260);
+                });
+            });
+
+            // Close on outside click
+            document.addEventListener('click', (e) => {
+                if (mobileOpen && topNav && !topNav.contains(e.target) && !mobileNav.contains(e.target)) {
+                    mobileOpen = false;
+                    hamburger.classList.remove('open');
+                    hamburger.setAttribute('aria-expanded', false);
+                    mobileNav.classList.remove('open');
+                    setTimeout(() => { mobileNav.style.display = ''; }, 260);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
